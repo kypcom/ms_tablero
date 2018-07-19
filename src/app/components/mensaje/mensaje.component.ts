@@ -836,7 +836,7 @@ export class MensajeComponent implements OnInit {
         const img2 = canvas.toDataURL('image/png');
 
         doc.addImage(h_img, 'JPEG', 5.5, 0);
-        doc.addImage(img2, 'JPEG', 55, 100);
+        doc.addImage(img2, 'JPEG', 55, 95);
         doc.addImage(f_img, 'PNG', 5.5, 255);
         doc.autoPrint();
         doc.save(name + '.pdf');

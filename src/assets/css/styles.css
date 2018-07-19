@@ -1169,6 +1169,9 @@ padding-left: 5%;
 .center-pdf-msj{
   padding-left: 20%;
 }
+.center-pdf-chart{
+  padding-left: 30%;
+}
 
 
 @media only screen and (max-width: 990px) {
@@ -1226,6 +1229,9 @@ display: inline-block;
     .center-pdf-msj{
       padding-left: 10%;
     }
+    .center-pdf-chart{
+      padding-left: 20%;
+    }
 
 
 
@@ -1248,6 +1254,9 @@ display: inline-block;
   }
 
   .center-pdf-msj{
+    padding-left: 0;
+  }
+  .center-pdf-chart{
     padding-left: 0;
   }
 
