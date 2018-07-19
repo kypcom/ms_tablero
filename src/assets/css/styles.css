@@ -984,7 +984,7 @@ background-color: #efefef;
 }
 
 .select_date_to select {
-  padding: 5px 1px;
+  padding: 5px 1px 5px 5px;
   width: 100%;
   margin-right: 0px;
   color: #606060;
@@ -1086,91 +1086,7 @@ font-size: 1rem;
     transform: rotate(360deg);
   }
 }
-@media only screen and (max-width: 990px) {
-  .title_aten{
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.5rem;
-  }
-  .num_aten{
-  text-align: center;
-  font-weight: 600;
-  font-size: 1.5rem;
-  }
-  .text_map{
-    text-align: center;
-  }
-  .text_map p {
-    padding-left: 0%;
-  }
 
-}
-@media only screen and (max-width: 1180px) {
-
-}
-
-@media only screen and (max-width: 980px) {
-  .card_map_info{
-   height:auto;
-  }
-  .map_info_title {
-    text-align: center;
-  }
-  .content-top-mensajes  {
-  height: auto !important;
-display: inline-block;
-  }
-  .content-lgnd-mensajes
-  {
-  height: auto !important;
-display: inline-block;
-  }
-
-  .content-usr-atencion{
-      height: auto !important;
-      display: inline-block;
-  }
-
-  .content-lgnd-usuarios{
-    height: auto !important;
-    display: inline-block;
-  }
-    .content-lgnd-bby{
-      height: auto !important;
-      display: inline-block;
-    }
-
-    .center-pdf-msj{
-      padding-left: 10%;
-    }
-
-
-
-
-}
-
-@media only screen and (max-width: 600px) {
-  #parent_gradient{
-    margin-left:0%;
-  }
-
-  .nav_menu {
-
-    text-align: left;
-  }
-
-  .nav_menu li {
-    display: inline-block;
-    margin-top: 3rem;
-  }
-
-  .center-pdf-msj{
-    padding-left: 0;
-  }
-
-
-
-}
 
 .doble_gradient{
   fill:url('#hash4_4');
@@ -1252,4 +1168,89 @@ padding-left: 5%;
 }
 .center-pdf-msj{
   padding-left: 20%;
+}
+
+
+@media only screen and (max-width: 990px) {
+  .title_aten{
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.5rem;
+  }
+  .num_aten{
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.5rem;
+  }
+  .text_map{
+    text-align: center;
+  }
+  .text_map p {
+    padding-left: 0%;
+  }
+
+}
+
+
+@media only screen and (max-width: 980px) {
+  .card_map_info{
+   height:auto;
+  }
+  .map_info_title {
+    text-align: center;
+  }
+  .content-top-mensajes  {
+  height: auto !important;
+display: inline-block;
+  }
+  .content-lgnd-mensajes
+  {
+  height: auto !important;
+display: inline-block;
+  }
+
+  .content-usr-atencion{
+      height: auto !important;
+      display: inline-block;
+  }
+
+  .content-lgnd-usuarios{
+    height: auto !important;
+    display: inline-block;
+  }
+    .content-lgnd-bby{
+      height: auto !important;
+      display: inline-block;
+    }
+
+    .center-pdf-msj{
+      padding-left: 10%;
+    }
+
+
+
+
+}
+
+@media only screen and (max-width: 600px) {
+  #parent_gradient{
+    margin-left:0%;
+  }
+
+  .nav_menu {
+
+    text-align: left;
+  }
+
+  .nav_menu li {
+    display: inline-block;
+    margin-top: 3rem;
+  }
+
+  .center-pdf-msj{
+    padding-left: 0;
+  }
+
+
+
 }

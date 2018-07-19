@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { fmilesPipe } from './pipes/fmiles.pipe';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 // Routes
@@ -49,7 +48,6 @@ import { HeaderMsComponent } from './components/header-ms/header-ms.component';
     app_routing,
     HttpClientModule,
     FormsModule,
-    NgbModule.forRoot(),
     DeviceDetectorModule.forRoot()
 
 

@@ -303,7 +303,7 @@ export class MapaComponent implements OnInit {
             this.valorEstatal();
           }
         });
-
+        this.chageVarName();
         break;
     }
 
@@ -488,7 +488,7 @@ export class MapaComponent implements OnInit {
       case 'hPemex':
         this._mapaService.getHospital(4, this.i_date, this.f_date).subscribe(resp => {
           //  this.v_nacioal=resp[0];
-          console.log('pemex');
+
           this.info = resp[1];
           this.mapa(resp[1]);
           if (this.estado != 'none') {
@@ -807,41 +807,6 @@ export class MapaComponent implements OnInit {
       .attr('height', 50);
 
 
-
-    /*let legend = key.append('defs')
-      .append('svg:linearGradient')
-      .attr('id', 'gradient');
-
-    legend.append('stop')
-      .attr('offset', '0%')
-      .attr('stop-color', '#ccc')
-      .attr('stop-opacity', 1);
-
-    legend.append('stop')
-      .attr('offset', '10%')
-      .attr('stop-color', '#9bfde6')
-      .attr('stop-opacity', 1);
-
-    legend.append('stop')
-      .attr('offset', '40%')
-      .attr('stop-color', '#46e2bc')
-      .attr('stop-opacity', 1);
-
-    legend.append('stop')
-      .attr('offset', '70%')
-      .attr('stop-color', '#00a68a')
-      .attr('stop-opacity', 1);
-
-    legend.append('stop')
-      .attr('offset', '100%')
-      .attr('stop-color', '#00576c')
-      .attr('stop-opacity', 1);
-
-    key.append('rect')
-    .classed('mapa_gradient',true)
-      .attr('width', 250)
-      .attr('height', 20);*/
-
     let y = d3.scaleLinear()
       .range([250, 0])
       .domain([
@@ -907,7 +872,7 @@ export class MapaComponent implements OnInit {
     function mouseEntra(d) {
 
       var screen = d3.select('body').style('width');
-      console.log(screen);
+
       screen = screen.replace('px', '');
       var left;
       var top;
@@ -1012,7 +977,7 @@ export class MapaComponent implements OnInit {
       this.varText = 'Todos los usuarios';
     }
 
-    if (this.variable == 'bby') {
+    if (this.variable == 'bby' && this.opcionsub == "bbyState") {
       this.varText = 'Todos los bebés';
     }
 

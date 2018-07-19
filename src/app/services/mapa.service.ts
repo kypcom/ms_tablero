@@ -134,7 +134,7 @@ export class MapaService {
 
     return this.http.get('assets/mapa/municipios.json').map((resp: any) => {
 
-      console.log(resp);
+
       const municipios = [];
       for (const mun of resp) {
         if (mun.cve_ent == estado) {
@@ -497,9 +497,6 @@ export class MapaService {
 
   // obtener la cuenta de los usuarios por estado: return arreglo de objetos
   mun_getAllUsers(estado, start, end): Observable<any> {
-
-    console.log('todos lo usuarios por municipio');
-
 
 
     const datos = [];

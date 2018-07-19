@@ -289,10 +289,6 @@ export class MensajeComponent implements OnInit {
 
     fin = `${this.f_year}-${this.f_mes}-28T00:00:00`;
 
-
-    /*resp[0]=inicio;
-    resp[1]=fin;
-  console.log(resp);*/
     this.i_date = inicio;
     this.f_date = fin;
 

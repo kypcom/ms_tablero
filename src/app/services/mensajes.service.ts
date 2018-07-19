@@ -48,7 +48,7 @@ export class MensajesService {
         objeto.msj = msj.message.replace('@contact.rp_name', 'María');
         objeto.msj = objeto.msj.replace('@(DATEVALUE(contact.rp_deliverydate))', fecha);
         objeto.msj = objeto.msj.replace('@contact.rp_babyname', 'Tu bebé');
-        objeto.type = msj.type;
+        objeto.type = msj.type.charAt(0).toUpperCase() + msj.type.slice(1);
         mensajes.push(objeto);
 
       }

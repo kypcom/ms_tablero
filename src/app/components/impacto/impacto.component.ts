@@ -791,7 +791,7 @@ export class ImpactoComponent implements OnInit {
   ///-------------------doble bar_chart----------------------------------------
 
   doble_bar(data, grafica, tooltip) {
-    console.log(data);
+
     this.help_build(0);
     var explorador = this.deviceInfo.browser;
     let csv_dta = [];
@@ -1276,7 +1276,7 @@ export class ImpactoComponent implements OnInit {
       .append('span')
       .attr('class', 'key-dot')
       .style('background', function(d: any, i) {
-        console.log(d.name + " :" + colores[i])
+
         return colores[i];
       });
 
