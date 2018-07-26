@@ -354,7 +354,7 @@
     <h4 style="font-weight: 600;color: #00556b">BEBÉS</h4>
     <div class="row">
 
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
         <div class="card">
           <div class="header bg-green">
             <h2>
@@ -422,7 +422,7 @@
 
         </div>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
         <div class="card">
 
           <div class="header bg-white">
@@ -480,7 +480,7 @@
 
         </div>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
         <div class="card">
           <div class="header bg-white">
             <h2>
@@ -526,15 +526,15 @@
 
                 <div class="row" *ngFor="let data of bby_atencion[1]" align="center">
 
-                  <div class=" col-md-4 title_aten" style="padding:1px 3px;margin:0px">
+                  <div class="col-xs-4 col-sm-4 col-md-4 title_aten" style="padding:1px 3px;margin:0px">
                     <p>{{data.key}}</p>
                   </div>
-                  <div class=" col-md-6 " style="padding:0px 5%;margin:0px">
+                  <div class="col-xs-6 col-sm-6  col-md-6 " style="padding:0px 5%;margin:0px">
                     <div class="progress" style="height:11px ">
                       <div class="progress-bar" role="progressbar" [ngStyle]="{'width':data.porciento }" style=" background-color: #005a6d" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
-                  <div class=" col-md-2 num_aten " style="padding:0px 1px;margin:0px">
+                  <div class="col-xs-2 col-sm-2  col-md-2 num_aten " style="padding:0px 1px;margin:0px">
                     <p>{{data.count | number}}</p>
                   </div>
 
@@ -679,7 +679,8 @@
     </div>
   </div>
 </div>
-<div class="f_impresion" id="c_bloqueo">
+
+<div *ngIf="pdf_desktop" class="f_impresion" id="c_bloqueo">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12">
@@ -706,7 +707,7 @@
   </div>
 </div>
 
-<div class="f_impresion" id="c_bloqueo_l">
+<div *ngIf="pdf_line" class="f_impresion" id="c_bloqueo">
   <div class="container">
     <div class="row">
       <div class="col-md-2">
@@ -717,14 +718,66 @@
             <h2><i class="spinner-2"></i> Generando documento</h2>
           </div>
           <div class="body" aling="center" style="padding-left:10%">
-            <div id="c_impresion_l" style="width:800px">
-              <div id="i_title_l"></div>
-              <div id="i_img_l"></div>
-              <div id="i_legend_l"></div>
-              <div id="i_help_l"></div>
+            <div id="c_impresion" style="width:800px">
+              <div id="i_title"></div>
+              <div id="i_img"></div>
+              <div id="i_legend"></div>
+              <div id="i_help"></div>
 
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="pdf_movile" class="load_mov" id="c_bloqueo_m">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="top:40%">
+
+          <div class="body" aling="center">
+            <p><i class="spinner-2"></i> Generando documento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="pdf_movile_c" class="f_impresion_m" id="c_bloqueo">
+  <div class="card">
+    <div class="header bg-white">
+      <h2><i class="spinner-2"></i> Generando documento</h2>
+    </div>
+    <div class="body" aling="center">
+      <div class="center-pdf-chart ">
+        <div id="c_impresion" style="width:400px">
+          <div id="i_title"></div>
+          <div id="i_img"></div>
+          <div id="i_legend"></div>
+          <div id="i_help" c></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="pdf_movile_l" class="f_impresion_m" id="c_bloqueo">
+  <div class="card">
+    <div class="header bg-white">
+      <h2><i class="spinner-2"></i> Generando documento</h2>
+    </div>
+    <div class="body" aling="center">
+      <div class="center-pdf-chart ">
+        <div id="c_impresion" style="width:800px">
+          <div id="i_title"></div>
+          <div id="i_img"></div>
+          <div id="i_legend"></div>
+          <div id="i_help" c></div>
         </div>
       </div>
     </div>

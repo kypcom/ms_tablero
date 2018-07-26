@@ -747,10 +747,10 @@ export class ImpactoService {
   get_alertType(grupo, start, end): Observable<any> {
 
     const razones = [
-      { 'razon': 1, 'name': 'Emergencia médica', 'size': 0 },
-      { 'razon': 2, 'name': 'Señal de alerta', 'size': 0 },
-      { 'razon': 3, 'name': 'Preocupación', 'size': 0 },
-      { 'razon': 4, 'name': 'Fue un error', 'size': 0 }
+      { 'razon': 1, 'name': 'Emergencia médica', 'name_box': '', 'size': 0 },
+      { 'razon': 2, 'name': 'Señal de alerta', 'name_box': '', 'size': 0 },
+      { 'razon': 3, 'name': 'Preocupación', 'name_box': '', 'size': 0 },
+      { 'razon': 4, 'name': 'Fue un error', 'name_box': '', 'size': 0 }
     ];
     let query = this.url + '/unicef/mialerta_by_group';
     if (start != 'none') {
@@ -802,7 +802,15 @@ export class ImpactoService {
         // a must be equal to b
         return 0;
       });
-
+      dta.children[0].name_box = dta.children[0].name;
+      for (let i = 1; i < dta.children.length; i++) {
+        if (dta.children[0].size < 70 && dta.children[i].size > 12 && dta.children[i].name.length < 15) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+        else if (dta.children[0].size < 65 && dta.children[i].size > 12) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+      }
       result[0] = total; /// total results
       result[1] = razones; // for legens
       result[2] = dta; //for tree map
@@ -823,10 +831,10 @@ export class ImpactoService {
       query = query + '&end_date=' + end;
     }
     const razones = [
-      { 'razon': 1, 'name': 'Emergencia médica', 'size': 0 },
-      { 'razon': 2, 'name': 'Señal de alerta', 'size': 0 },
-      { 'razon': 3, 'name': 'Preocupación', 'size': 0 },
-      { 'razon': 4, 'name': 'Fue un error', 'size': 0 }
+      { 'razon': 1, 'name': 'Emergencia médica', 'name_box': '', 'size': 0 },
+      { 'razon': 2, 'name': 'Señal de alerta', 'name_box': '', 'size': 0 },
+      { 'razon': 3, 'name': 'Preocupación', 'name_box': '', 'size': 0 },
+      { 'razon': 4, 'name': 'Fue un error', 'name_box': '', 'size': 0 }
     ];
     const result = [];
     const lbl = [];
@@ -873,6 +881,15 @@ export class ImpactoService {
         // a must be equal to b
         return 0;
       });
+      dta.children[0].name_box = dta.children[0].name;
+      for (let i = 1; i < dta.children.length; i++) {
+        if (dta.children[0].size < 70 && dta.children[i].size > 12 && dta.children[i].name.length < 15) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+        else if (dta.children[0].size < 65 && dta.children[i].size > 12) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+      }
 
       result[0] = total; /// total results
       result[1] = razones; // for legens
@@ -902,10 +919,10 @@ export class ImpactoService {
       query = query + '&end_date=' + end;
     }
     const razones = [
-      { 'razon': 1, 'name': 'Emergencia médica', 'size': 0 },
-      { 'razon': 2, 'name': 'Señal de alerta', 'size': 0 },
-      { 'razon': 3, 'name': 'Preocupación', 'size': 0 },
-      { 'razon': 4, 'name': 'Fue un error', 'size': 0 }
+      { 'razon': 1, 'name': 'Emergencia médica', 'name_box': '', 'size': 0 },
+      { 'razon': 2, 'name': 'Señal de alerta', 'name_box': '', 'size': 0 },
+      { 'razon': 3, 'name': 'Preocupación', 'name_box': '', 'size': 0 },
+      { 'razon': 4, 'name': 'Fue un error', 'name_box': '', 'size': 0 }
     ];
     const result = [];
     const lbl = [];
@@ -953,6 +970,16 @@ export class ImpactoService {
         // a must be equal to b
         return 0;
       });
+
+      dta.children[0].name_box = dta.children[0].name;
+      for (let i = 1; i < dta.children.length; i++) {
+        if (dta.children[0].size < 70 && dta.children[i].size > 12 && dta.children[i].name.length < 15) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+        else if (dta.children[0].size < 65 && dta.children[i].size > 12) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+      }
       result[0] = total; /// total results
       result[1] = razones; // for legens
       result[2] = dta; //for tree map
@@ -976,10 +1003,10 @@ export class ImpactoService {
       query = query + '&end_date=' + end;
     }
     const razones = [
-      { 'razon': 1, 'name': 'Emergencia médica', 'size': 0 },
-      { 'razon': 2, 'name': 'Señal de alerta', 'size': 0 },
-      { 'razon': 3, 'name': 'Preocupación', 'size': 0 },
-      { 'razon': 4, 'name': 'Fue un error', 'size': 0 }
+      { 'razon': 1, 'name': 'Emergencia médica', 'name_box': '', 'size': 0 },
+      { 'razon': 2, 'name': 'Señal de alerta', 'name_box': '', 'size': 0 },
+      { 'razon': 3, 'name': 'Preocupación', 'name_box': '', 'size': 0 },
+      { 'razon': 4, 'name': 'Fue un error', 'name_box': '', 'size': 0 }
     ];
     const result = [];
     const lbl = [];
@@ -1026,6 +1053,16 @@ export class ImpactoService {
         return 0;
       });
 
+      dta.children[0].name_box = dta.children[0].name;
+      for (let i = 1; i < dta.children.length; i++) {
+        if (dta.children[0].size < 70 && dta.children[i].size > 12 && dta.children[i].name.length < 15) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+        else if (dta.children[0].size < 65 && dta.children[i].size > 12) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+      }
+
       result[0] = total; /// total results
       result[1] = razones; // for legens
       result[2] = dta; //for tree map
@@ -1040,10 +1077,10 @@ export class ImpactoService {
 
 
     const razones = [
-      { 'razon': 1, 'name': 'Emergencia médica', 'size': 0 },
-      { 'razon': 2, 'name': 'Señal de alerta', 'size': 0 },
-      { 'razon': 3, 'name': 'Preocupación', 'size': 0 },
-      { 'razon': 4, 'name': 'Fue un error', 'size': 0 }
+      { 'razon': 1, 'name': 'Emergencia médica', 'name_box': '', 'size': 0 },
+      { 'razon': 2, 'name': 'Señal de alerta', 'name_box': '', 'size': 0 },
+      { 'razon': 3, 'name': 'Preocupación', 'name_box': '', 'size': 0 },
+      { 'razon': 4, 'name': 'Fue un error', 'name_box': '', 'size': 0 }
     ];
     let query = this.url + '/unicef/mialerta_by_channel';
     if (start != 'none') {
@@ -1096,6 +1133,16 @@ export class ImpactoService {
         return 0;
       });
 
+      dta.children[0].name_box = dta.children[0].name;
+      for (let i = 1; i < dta.children.length; i++) {
+        if (dta.children[0].size < 70 && dta.children[i].size > 12 && dta.children[i].name.length < 15) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+        else if (dta.children[0].size < 65 && dta.children[i].size > 12) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+      }
+
       result[0] = total; /// total results
       result[1] = razones; // for legens
       result[2] = dta; //for tree map
@@ -1119,10 +1166,10 @@ export class ImpactoService {
       query = query + '&end_date=' + end;
     }
     const razones = [
-      { 'razon': 1, 'name': 'Emergencia médica', 'size': 0 },
-      { 'razon': 2, 'name': 'Señal de alerta', 'size': 0 },
-      { 'razon': 3, 'name': 'Preocupación', 'size': 0 },
-      { 'razon': 4, 'name': 'Fue un error', 'size': 0 }
+      { 'razon': 1, 'name': 'Emergencia médica', 'name_box': '', 'size': 0 },
+      { 'razon': 2, 'name': 'Señal de alerta', 'name_box': '', 'size': 0 },
+      { 'razon': 3, 'name': 'Preocupación', 'name_box': '', 'size': 0 },
+      { 'razon': 4, 'name': 'Fue un error', 'name_box': '', 'size': 0 }
     ];
     const result = [];
     const lbl = [];
@@ -1167,6 +1214,16 @@ export class ImpactoService {
         // a must be equal to b
         return 0;
       });
+
+      dta.children[0].name_box = dta.children[0].name;
+      for (let i = 1; i < dta.children.length; i++) {
+        if (dta.children[0].size < 70 && dta.children[i].size > 12 && dta.children[i].name.length < 15) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+        else if (dta.children[0].size < 65 && dta.children[i].size > 12) {
+          dta.children[i].name_box = dta.children[i].name;
+        }
+      }
 
       result[0] = total; /// total results
       result[1] = razones; // for legens

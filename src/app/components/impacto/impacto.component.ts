@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
+import * as canvg from 'canvg-fixed';
 import { GCsvService } from '../../services/g-csv.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { fmilesPipe } from '../../pipes/fmiles.pipe';
@@ -82,6 +83,8 @@ export class ImpactoComponent implements OnInit {
   dta_doble;
   dta_tree;
   dta_bar;
+  pdf_desktop = false;
+  pdf_movile = false;
 
 
   constructor(private _impactoService: ImpactoService,
@@ -578,6 +581,7 @@ export class ImpactoComponent implements OnInit {
 
         this._impactoService.get_alertReason(this.i_date, this.f_date).subscribe(resp => {
           if (resp[0] > 0) {
+            this.chart_alert = true;
             d3.selectAll('#lgn_tree > *').remove();
             this.treeMap(resp[2], '#chart_tree', 'tool_tree');
             this.legends(resp[1], '#lgn_tree');
@@ -1225,10 +1229,11 @@ export class ImpactoComponent implements OnInit {
     cell.append('text')
 
       .selectAll('tspan')
-      .data(function(d) { return d.data.name.split(/(?=[A-Z][^A-Z])/g); })
+      .data(function(d) { return d.data.name_box.split(/(?=[A-Z][^A-Z])/g); })
       .enter().append('tspan')
       .attr('x', 4)
       .attr('y', function(d, i) { return 20 + i; })
+      .attr('class', 'ajust-text-box')
       .text(function(d: any) { return d; })
       .attr('fill', '#fff')
       .attr('font-family', 'Open Sans')
@@ -1370,6 +1375,27 @@ export class ImpactoComponent implements OnInit {
   }
 
   descarga_chart(grafica, leyenda, nameFile) {
+    var screen = d3.select('body').style('width');
+    screen = screen.replace('px', '');
+    var min_screcreen = false;
+
+
+    if (parseInt(screen) < 500) {
+
+      this.pdf_movile = true;
+      this.pdf_desktop = false;
+      min_screcreen = true;
+
+
+    }
+    else {
+
+      this.pdf_movile = false;
+      this.pdf_desktop = true;
+      min_screcreen = false;
+
+    }
+
     let title = '';
     let legend = '';
     let help = '';
@@ -1394,36 +1420,43 @@ export class ImpactoComponent implements OnInit {
     }
     const h_img = this._headerService.headerimg;
     const f_img = this._headerService.footerimg;
+    var ie_img = "";
 
 
-    d3.select('#c_bloqueo').style('display', 'block');
-    const cambio = d3.select(grafica + '> svg');
-    cambio.attr('viewBox', null);
-    cambio.attr('preserveAspectRatio', null);
-    cambio.attr('width', '400');
-    cambio.attr('height', '300');
-
-    $(grafica).clone().appendTo('#i_img');
-
-
-    d3.select("#i_title").append('p').attr('class', 'title_impresion').text(title);
-    d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
-    d3.select("#i_legend").append('div').html(lgn);
-
-
+    const generado = setTimeout(() => { convert() }, 1000);
     const impresion = setTimeout(() => {
-      imprimir();
+      imprimir()
     }, 2000);
 
 
+
+    function convert() {
+      const cambio = d3.select(grafica + '> svg');
+      cambio.attr('viewBox', null);
+      cambio.attr('preserveAspectRatio', null);
+      cambio.attr('width', '400px');
+      cambio.attr('height', '300px');
+
+      if (min_screcreen) {
+        d3.select('#c_bloqueo_m').style('display', 'block')
+      }
+      d3.select('#c_bloqueo').style('display', 'block');
+
+      d3.select('#i_img').append('canvas').attr('id', 'canvas').attr('width', 400).attr('height', 300);
+      const canvas: any = document.getElementById('canvas');
+      const svgString = new XMLSerializer().serializeToString(document.querySelector(grafica + '> svg'));
+      canvg('canvas', svgString);
+      d3.select("#i_title").append('p').attr('class', 'title_impresion ').text(title);
+      d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
+      d3.select("#i_legend").append('div').html(lgn);
+
+    }
+
     function imprimir() {
       html2canvas(document.getElementById('c_impresion'), { scale: 1 }).then(function(canvas) {
-
         const img2 = canvas.toDataURL('image/png');
-
         doc.addImage(h_img, 'JPEG', 5.5, 0);
-
-        doc.addImage(img2, 'JPEG', 55, 95);
+        doc.addImage(img2, 'PNG', 55, 95);
         doc.addImage(f_img, 'PNG', 5.5, 255);
         doc.autoPrint();
         doc.save(nameFile + '.pdf');
@@ -1436,15 +1469,12 @@ export class ImpactoComponent implements OnInit {
           .attr('height', null)
           .attr('viewBox', '0 0 400 300')
           .attr('preserveAspectRatio', 'xMidYMid');
-
         d3.select('#c_bloqueo').style('display', 'none');
-
+        d3.select('#c_bloqueo_m').style('display', 'none');
 
 
       });
     }
-
-
 
   }
   generate_csv() {
@@ -1465,18 +1495,10 @@ export class ImpactoComponent implements OnInit {
     let data = [this.dta_tree, this.dta_doble, this.dta_bar];
 
     this._generateService.generate(data, 'impacto');
-
-
-
-
-
   }
 
   device() {
-    //console.log('hello `Home` component');
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    //console.log(this.deviceInfo);
-
   }
 
 

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import * as d3 from 'd3';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
+import * as canvg from 'canvg-fixed';
 import * as $ from 'jquery';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { fmilesPipe } from '../../pipes/fmiles.pipe';
@@ -84,6 +85,8 @@ export class MapainfoComponent implements OnInit {
   years = [];
 
   dta_csv;
+  pdf_movile = false;
+  pdf_desktop = false;
 
 
 
@@ -1770,40 +1773,60 @@ export class MapainfoComponent implements OnInit {
   }
 
   descarga() {
+    this.pdf_movile = false;
+    this.pdf_desktop = false;
+    var screen = d3.select('body').style('width');
+    screen = screen.replace('px', '');
+    var min_screcreen = false;
+    if (parseInt(screen) < 500) {
+
+      this.pdf_movile = true;
+      min_screcreen = true;
+
+
+    }
+    else {
+      this.pdf_desktop = true;
+      min_screcreen = false;
+    }
+
+
+
     const h_img = this._headerService.headerimg;
     const f_img = this._headerService.footerimg;
     const doc: any = new jsPDF({ orientation: 'p', unit: 'mm', fotmat: 'letter' });
-
-    var title = "Línea del tiempo de " + this.varText;
-    if (this.estado == 'none ' && this.municipio == 'none') {
-      title = title + '- Nacional'
-    }
-    if (this.estado != 'none ' && this.municipio == 'none') {
-      title = title + '- ' + this.name_estado;
-    }
-    if (this.estado != 'none ' && this.municipio != 'none') {
-      title = title + '- ' + this.name_municipio + ', ' + this.name_estado;
-    }
+    var titulo = d3.select("#title_chart").html();
 
     var help = this.help_text;
-    d3.select('#c_bloqueo_l').style('display', 'block');
-    const cambio = d3.select('#chart > svg');
-    cambio.attr('viewBox', null);
-    cambio.attr('preserveAspectRatio', null);
-    cambio.attr('width', '800');
-    cambio.attr('height', '300');
 
-    $('#chart').clone().appendTo('#i_img_l');
 
-    d3.select("#i_title_l").append('p').attr('class', 'title_impresion').text(title);
-    d3.select("#i_help_l").append('p').attr('class', 'help_impresion').text(help);
-
+    const generado = setTimeout(() => { convert() }, 1000);
     const impresion = setTimeout(() => {
-      imprimir();
+      imprimir()
     }, 2000);
 
+    function convert() {
+      if (min_screcreen) {
+        d3.select('#c_bloqueo_m').style('display', 'block')
+      }
+      d3.select('#c_bloqueo').style('display', 'block');
+      const cambio = d3.select('#chart > svg');
+      cambio.attr('viewBox', null);
+      cambio.attr('preserveAspectRatio', null);
+      cambio.attr('width', '800');
+      cambio.attr('height', '300');
+
+      d3.select('#i_img').append('canvas').attr('id', 'canvas').attr('width', 800).attr('height', 300);
+      const canvas: any = document.getElementById('canvas');
+      const svgString = new XMLSerializer().serializeToString(document.querySelector('#chart > svg'));
+      canvg('canvas', svgString);
+      d3.select("#i_title").append('div').attr('class', 'title_impresion').html(titulo);
+
+      d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
+    }
+
     function imprimir() {
-      html2canvas(document.getElementById('c_impresion_l')).then(function(canvas) {
+      html2canvas(document.getElementById('c_impresion')).then(function(canvas) {
 
         const img2 = canvas.toDataURL('image/png');
 
@@ -1812,17 +1835,18 @@ export class MapainfoComponent implements OnInit {
         doc.addImage(f_img, 'PNG', 5.5, 255);
         doc.autoPrint();
         doc.save('fichaCompleta.pdf');
-        d3.selectAll('#i_help_l >* ').remove();
-        d3.selectAll('#i_title_l >* ').remove();
-        d3.selectAll('#i_img_l >* ').remove();
-        d3.selectAll('#i_legend_l >* ').remove();
+        d3.selectAll('#i_help >* ').remove();
+        d3.selectAll('#i_title >* ').remove();
+        d3.selectAll('#i_img >* ').remove();
+        d3.selectAll('#i_legend >* ').remove();
         d3.select('#chart > svg')
           .attr('width', null)
           .attr('height', null)
           .attr('viewBox', '0 0 800 300')
           .attr('preserveAspectRatio', 'xMidYMid');
 
-        d3.select('#c_bloqueo_l').style('display', 'none');
+        d3.select('#c_bloqueo').style('display', 'none');
+        d3.select('#c_bloqueo_m').style('display', 'none')
 
 
 

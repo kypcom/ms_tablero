@@ -549,7 +549,7 @@
   </div>
 </div>
 
-<div class="f_impresion" id="c_bloqueo">
+<div *ngIf="pdf_desktop" class="f_impresion" id="c_bloqueo">
   <div class="container">
     <div class="row">
 
@@ -559,9 +559,50 @@
             <h2><i class="spinner-2"></i> Generando documento</h2>
           </div>
           <div class="body" aling="center">
-            <div class="center-pdf-chart">
-              <div id="c_impresion" style=" width:400px">
-                <div id="i_title"></div>
+            <div class="center-pdf-chart ">
+              <div id="c_impresion" style=" width:400px;">
+                <div id="i_title" class="ajust_text"></div>
+                <div id="i_img"></div>
+                <div id="i_legend" class="ajust_text"></div>
+                <div id="i_help" class="ajust_text"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="pdf_movile" class="load_mov" id="c_bloqueo_m">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="top:40%">
+
+          <div class="body" aling="center">
+            <p><i class="spinner-2"></i> Generando documento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="pdf_movile" class="f_impresion_m" id="c_bloqueo">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="header bg-white">
+            <h2><i class="spinner-2"></i> Generando documento</h2>
+          </div>
+          <div class="body" aling="center">
+            <div class="center-pdf-chart ">
+              <div id="c_impresion" style=" width:400px;">
+                <div id="i_title"> </div>
                 <div id="i_img"></div>
                 <div id="i_legend"></div>
                 <div id="i_help"></div>

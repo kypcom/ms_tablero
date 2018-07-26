@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import * as $ from 'jquery';
+import * as canvg from 'canvg-fixed';
 import { GCsvService } from '../../services/g-csv.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { fmilesPipe } from '../../pipes/fmiles.pipe';
@@ -90,6 +91,13 @@ export class UsuariosComponent implements OnInit {
   c_line_dta = [];
   c_progress_dta = [];
   // end data csv
+
+  pdf_desktop = false;
+  pdf_movile = false;
+  pdf_movile_c = false;
+  pdf_movile_l = false;
+  pdf_line = false;
+
 
 
 
@@ -1233,6 +1241,27 @@ export class UsuariosComponent implements OnInit {
 
 
   descarga(grafica, leyenda, name) {
+    this.pdf_desktop = false;
+    this.pdf_movile = false;
+    this.pdf_movile_c = false;
+    this.pdf_movile_l = false;
+    this.pdf_line = false;
+    var min_screcreen = false;
+
+    var screen = d3.select('body').style('width');
+    screen = screen.replace('px', '');
+    if (parseInt(screen) < 500) {
+      this.pdf_movile = true;
+      this.pdf_movile_c = true;
+      min_screcreen = true;
+    }
+    else {
+
+      this.pdf_desktop = true;
+      min_screcreen = false;
+
+    }
+
 
     let title = '';
     let legend = '';
@@ -1292,25 +1321,32 @@ export class UsuariosComponent implements OnInit {
     const h_img = this._headerService.headerimg;
     const f_img = this._headerService.footerimg;
 
-    d3.select('#c_bloqueo').style('display', 'block');
 
-    const cambio = d3.select(grafica + '> svg');
-    cambio.attr('viewBox', null);
-    cambio.attr('preserveAspectRatio', null);
-    cambio.attr('width', '400');
-    cambio.attr('height', '300');
 
-    //variables texto
-    $(grafica).clone().appendTo('#i_img');
-
-    d3.select("#i_title").append('p').attr('class', 'title_impresion').text(title);
-    d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
-    d3.select("#i_legend").append('div').html(lgn);
-
+    const generado = setTimeout(() => { convert() }, 1000);
     const impresion = setTimeout(() => {
-      imprimir();
+      imprimir()
     }, 2000);
 
+    function convert() {
+      if (min_screcreen) {
+        d3.select('#c_bloqueo_m').style('display', 'block');
+      }
+      d3.select('#c_bloqueo').style('display', 'block');
+      const cambio = d3.select(grafica + '> svg');
+      cambio.attr('viewBox', null);
+      cambio.attr('preserveAspectRatio', null);
+      cambio.attr('width', '400');
+      cambio.attr('height', '300');
+
+      d3.select('#i_img').append('canvas').attr('id', 'canvas').attr('width', 400).attr('height', 300);
+      const canvas: any = document.getElementById('canvas');
+      const svgString = new XMLSerializer().serializeToString(document.querySelector(grafica + '> svg'));
+      canvg('canvas', svgString);
+      d3.select("#i_title").append('p').attr('class', 'title_impresion').text(title);
+      d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
+      d3.select("#i_legend").append('div').html(lgn);
+    }
 
     function imprimir() {
       html2canvas(document.getElementById('c_impresion'), { scale: 1 }).then(function(canvas) {
@@ -1333,49 +1369,109 @@ export class UsuariosComponent implements OnInit {
           .attr('viewBox', '0 0 400 300')
           .attr('preserveAspectRatio', 'xMidYMid');
 
+
         d3.select('#c_bloqueo').style('display', 'none');
+        d3.select('#c_bloqueo_m').style('display', 'none');
       });
     }
 
   }
 
   descarga_progress() {
+    this.pdf_desktop = false;
+    this.pdf_movile = false;
+    this.pdf_movile_c = false;
+    this.pdf_movile_l = false;
+    this.pdf_line = false;
+
+    var screen = d3.select('body').style('width');
+    screen = screen.replace('px', '');
+    var min_screcreen = false;
+
+    if (parseInt(screen) < 500) {
+
+      this.pdf_movile = true;
+      this.pdf_movile_c = true;
+      min_screcreen = true;
+
+
+    }
+    else {
+      this.pdf_desktop = true;
+      min_screcreen = false;
+    }
+
 
     const h_img = this._headerService.headerimg;
     const f_img = this._headerService.footerimg;
     var title = "Atención médica",
       help = "Tota de bebés por lugar donde la mamá reporta recibir atención médica."
     let lgn = d3.select('#chart_progres').html();
-    d3.select('#c_bloqueo').style('display', 'block');
-    d3.select("#i_title").append('p').attr('class', 'title_impresion').text(title);
-    d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
-    d3.select("#i_legend").append('div').html(lgn);
 
-    html2canvas(document.getElementById('c_impresion'), { scale: 1 }).then(function(canvas) {
-      const img2 = canvas.toDataURL('image/png');
-      const doc: any = new jsPDF({ orientation: 'p', unit: 'mm', fotmat: 'letter' });
-      doc.addImage(h_img, 'JPEG', 5.5, 0);
-      doc.addImage(img2, 'JPEG', 55, 100);
-      doc.addImage(f_img, 'PNG', 5.5, 255);
-      doc.autoPrint();
-      doc.save('atencionMedica.pdf');
-      d3.selectAll('#i_help >* ').remove();
-      d3.selectAll('#i_title >* ').remove();
-      d3.selectAll('#i_img >* ').remove();
-      d3.selectAll('#i_legend >* ').remove();
+    const impresion = setTimeout(() => {
+      imprimir()
+    }, 1000);
 
+    function imprimir() {
+      if (min_screcreen) {
+        d3.select('#c_bloqueo_m').style('display', 'block');
+      }
+      d3.select('#c_bloqueo').style('display', 'block');
 
-      d3.select('#c_bloqueo').style('display', 'none');
+      d3.select("#i_title").append('p').attr('class', 'title_impresion').text(title);
+      d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
+      d3.select("#i_legend").append('div').html(lgn);
 
+      html2canvas(document.getElementById('c_impresion'), { scale: 1 }).then(function(canvas) {
+        const img2 = canvas.toDataURL('image/png');
+        const doc: any = new jsPDF({ orientation: 'p', unit: 'mm', fotmat: 'letter' });
+        doc.addImage(h_img, 'JPEG', 5.5, 0);
+        doc.addImage(img2, 'JPEG', 50, 100);
+        doc.addImage(f_img, 'PNG', 5.5, 255);
+        doc.autoPrint();
+        doc.save('atencionMedica.pdf');
+        d3.selectAll('#i_help >* ').remove();
+        d3.selectAll('#i_title >* ').remove();
+        d3.selectAll('#i_img >* ').remove();
+        d3.selectAll('#i_legend >* ').remove();
 
+        d3.select('#c_bloqueo_m').style('display', 'none');
+        d3.select('#c_bloqueo').style('display', 'none');
 
-    });
+      });
+
+    }
 
 
 
   }
 
   descarga_line() {
+    this.pdf_desktop = false;
+    this.pdf_movile = false;
+    this.pdf_movile_c = false;
+    this.pdf_movile_l = false;
+    this.pdf_line = false;
+
+    var screen = d3.select('body').style('width');
+    screen = screen.replace('px', '');
+    var min_screcreen = false;
+
+
+    if (parseInt(screen) < 500) {
+
+      this.pdf_movile = true;
+      this.pdf_movile_l = true;
+      min_screcreen = true;
+
+
+    }
+    else {
+      this.pdf_line = true;
+      min_screcreen = false;
+
+    }
+
     const h_img = this._headerService.headerimg;
     const f_img = this._headerService.footerimg;
     const doc: any = new jsPDF({ orientation: 'p', unit: 'mm', fotmat: 'letter' });
@@ -1383,43 +1479,53 @@ export class UsuariosComponent implements OnInit {
       title = "Total de bebés por semana de gestación al nacer",
       help = "Tota de usuarios embarazadas por semana de gestación."
 
-    d3.select('#c_bloqueo_l').style('display', 'block');
-
-    const cambio = d3.select('#chart_line > svg');
-    cambio.attr('viewBox', null);
-    cambio.attr('preserveAspectRatio', null);
-    cambio.attr('width', '800');
-    cambio.attr('height', '300');
-    $('#chart_line').clone().appendTo('#i_img_l');
-
-    d3.select("#i_title_l").append('p').attr('class', 'title_impresion').text(title);
-    d3.select("#i_help_l").append('p').attr('class', 'help_impresion').text(help);
-
+    const generado = setTimeout(() => { convert() }, 1000);
     const impresion = setTimeout(() => {
-      imprimir();
+      imprimir()
     }, 2000);
 
+    function convert() {
+      if (min_screcreen) {
+        d3.select('#c_bloqueo_m').style('display', 'block')
+      }
+      d3.select('#c_bloqueo').style('display', 'block');
+      //d3.select('#c_impresion').attr('width', '800px');
+
+      const cambio = d3.select('#chart_line > svg');
+      cambio.attr('viewBox', null);
+      cambio.attr('preserveAspectRatio', null);
+      cambio.attr('width', '800');
+      cambio.attr('height', '300');
+
+      d3.select('#i_img').append('canvas').attr('id', 'canvas').attr('width', 800).attr('height', 300);
+      const canvas: any = document.getElementById('canvas');
+      const svgString = new XMLSerializer().serializeToString(document.querySelector('#chart_line > svg'));
+      canvg('canvas', svgString);
+
+      d3.select("#i_title").append('p').attr('class', 'title_impresion').text(title);
+      d3.select("#i_help").append('p').attr('class', 'help_impresion').text(help);
+    }
+
     function imprimir() {
-      html2canvas(document.getElementById('c_impresion_l'), { scale: 1 }).then(function(canvas) {
-
+      html2canvas(document.getElementById('c_impresion'), { scale: 1 }).then(function(canvas) {
         const img2 = canvas.toDataURL('image/png');
-
         doc.addImage(h_img, 'JPEG', 5.5, 0);
         doc.addImage(img2, 'JPEG', 4, 100);
         doc.addImage(f_img, 'PNG', 5.5, 255);
         doc.autoPrint();
         doc.save('semanasGestacion.pdf');
-        d3.selectAll('#i_help_l >* ').remove();
-        d3.selectAll('#i_title_l >* ').remove();
-        d3.selectAll('#i_img_l >* ').remove();
-        d3.selectAll('#i_legend_l >* ').remove();
+        d3.selectAll('#i_help >* ').remove();
+        d3.selectAll('#i_title >* ').remove();
+        d3.selectAll('#i_img >* ').remove();
+        d3.selectAll('#i_legend >* ').remove();
         d3.select('#chart_line > svg')
           .attr('width', null)
           .attr('height', null)
           .attr('viewBox', '0 0 800 300')
           .attr('preserveAspectRatio', 'xMidYMid');
 
-        d3.select('#c_bloqueo_l').style('display', 'none');
+        d3.select('#c_bloqueo').style('display', 'none');
+        d3.select('#c_bloqueo_m').style('display', 'none')
 
 
 
@@ -1467,10 +1573,7 @@ export class UsuariosComponent implements OnInit {
 
 
   device() {
-    //console.log('hello `Home` component');
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    //console.log(this.deviceInfo);
-
   }
 
 

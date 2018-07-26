@@ -223,7 +223,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="header bg-white">
-            <h2>
+            <h2 id="title_chart">
                               Línea del tiempo de “{{varText}}” - <span *ngIf="estado=='none'&& municipio=='none'"> Nacional</span><span *ngIf="estado!='none'&&municipio=='none'"> {{name_estado}}</span><span *ngIf="estado!='none'&&municipio!='none'">{{name_municipio}}, {{name_estado}}</span>
                                  </h2>
             <div id="help_line" class="tool_help_g"><span></span>
@@ -277,7 +277,7 @@
 
 </section>
 
-<div class="f_impresion" id="c_bloqueo_l">
+<div *ngIf="pdf_desktop" class="f_impresion" id="c_bloqueo">
   <div class="container">
     <div class="row">
       <div class="col-md-2">
@@ -288,14 +288,48 @@
             <h2><i class="spinner-2"></i> Generando documento</h2>
           </div>
           <div class="body" aling="center" style="padding-left:10%">
-            <div id="c_impresion_l" style="width:800px">
-              <div id="i_title_l"></div>
-              <div id="i_img_l"></div>
-              <div id="i_legend_l"></div>
-              <div id="i_help_l"></div>
+            <div id="c_impresion" style="width:800px">
+              <div id="i_title"></div>
+              <div id="i_img"></div>
+              <div id="i_legend"></div>
+              <div id="i_help"></div>
 
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="pdf_movile" class="load_mov" id="c_bloqueo_m">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="top:40%">
+
+          <div class="body" aling="center">
+            <p><i class="spinner-2"></i> Generando documento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="pdf_movile" class="f_impresion_m" id="c_bloqueo">
+  <div class="card">
+    <div class="header bg-white">
+      <h2><i class="spinner-2"></i> Generando documento</h2>
+    </div>
+    <div class="body" aling="center">
+      <div class="center-pdf-chart ">
+        <div id="c_impresion" style="width:800px">
+          <div id="i_title"></div>
+          <div id="i_img"></div>
+          <div id="i_legend"></div>
+          <div id="i_help" c></div>
         </div>
       </div>
     </div>
