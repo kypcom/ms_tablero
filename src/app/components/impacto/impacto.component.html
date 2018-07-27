@@ -165,7 +165,7 @@
 
             </div>
             <div align="left">
-              <p class="total_text" style="padding-left:5%">
+              <p class="total_text" style="padding-left:5%" id="tag_sn">
                 <img src="assets/img/si_impacto.png"> Si - <img *ngIf="deviceInfo.browser != 'safari'" src="assets/img/no_impacto.png"><img *ngIf="deviceInfo.browser == 'safari'" src="assets/img/no_safari.png"> No </p>
             </div>
 
@@ -562,6 +562,7 @@
             <div class="center-pdf-chart ">
               <div id="c_impresion" style=" width:400px;">
                 <div id="i_title" class="ajust_text"></div>
+                <div id="i_SN"></div>
                 <div id="i_img"></div>
                 <div id="i_legend" class="ajust_text"></div>
                 <div id="i_help" class="ajust_text"></div>
@@ -603,6 +604,7 @@
             <div class="center-pdf-chart ">
               <div id="c_impresion" style=" width:400px;">
                 <div id="i_title"> </div>
+                <div id="i_SN"></div>
                 <div id="i_img"></div>
                 <div id="i_legend"></div>
                 <div id="i_help"></div>

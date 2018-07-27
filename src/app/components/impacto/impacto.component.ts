@@ -1440,6 +1440,10 @@ export class ImpactoComponent implements OnInit {
       if (min_screcreen) {
         d3.select('#c_bloqueo_m').style('display', 'block')
       }
+      if (grafica == "#chart_doble") {
+        var tag_sn = d3.selectAll('#tag_sn').html();
+        d3.select("#i_SN").append('div').html(tag_sn);
+      }
       d3.select('#c_bloqueo').style('display', 'block');
 
       d3.select('#i_img').append('canvas').attr('id', 'canvas').attr('width', 400).attr('height', 300);
@@ -1464,6 +1468,7 @@ export class ImpactoComponent implements OnInit {
         d3.selectAll('#i_title >* ').remove();
         d3.selectAll('#i_img >* ').remove();
         d3.selectAll('#i_legend >* ').remove();
+        d3.selectAll('#i_SN >* ').remove();
         d3.select(grafica + '> svg')
           .attr('width', null)
           .attr('height', null)
